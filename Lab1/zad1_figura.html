@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Canvas Graphics</title>
+    <script>
+        var canvas;
+        var graphics;
+
+        function drawBody() {
+            graphics.fillStyle = "#fe0000";
+            graphics.strokeRect(150, 0, 150, 450);
+            graphics.fillRect(150, 0, 150, 450);
+        }
+
+        function init() {
+            canvas = document.getElementById("theCanvas");
+            graphics = canvas.getContext("2d");
+            drawBody();
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <canvas id="theCanvas" width="450" height="450"></canvas>
+</body>
+
+</html>
