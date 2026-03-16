@@ -8,21 +8,124 @@
         var graphics;
 
         function drawBody() {
+
+            /*
             graphics.fillStyle = "#fe0000";
-            graphics.strokeRect(150, 0, 150, 450);
-            graphics.fillRect(150, 0, 150, 450);
+            graphics.fillRect(150, 0, 150, 450); // Vertical rect
+            graphics.fillRect(0, 150, 450, 150); // Horizontal rect
+            */
+
+            graphics.beginPath();
+            graphics.moveTo(0, 150);    // Starting from top-left corner of left horizontal rectangle
+            graphics.lineTo(150, 150);
+            graphics.lineTo(150, 0);
+            graphics.lineTo(300, 0);    // Top right of vertical rectangle
+            graphics.lineTo(300, 150);
+            graphics.lineTo(450, 150);
+            graphics.lineTo(450, 300);  // Bottom-right of horizontal rectangle
+            graphics.lineTo(300, 300);
+            graphics.lineTo(300, 450);
+            graphics.lineTo(150, 450);  // Bottom-left of vertical rectangle
+            graphics.lineTo(150, 300);
+            graphics.lineTo(0, 300);
+            graphics.lineTo(0, 150);    // Back to top-left of horizontal rectangle
+
+            // Body color
+            graphics.fillStyle = "#fe0000";
+            graphics.fill();
+
+            // Body outline
+            graphics.lineWidth = 3;
+            graphics.strokeStyle = "black";
+            graphics.stroke();
+
+        }
+
+        function drawEyes() {
+
+            // White part
+            graphics.beginPath();
+
+            // Left
+            graphics.translate(150, 150);
+            graphics.arc(30, 37.5, 25, 0, 2 * Math.PI);
+            // Right
+            graphics.translate(150, 0);
+            graphics.arc(-30, 37.5, 25, 0, 2 * Math.PI);
+
+            graphics.fillStyle = "white";
+            graphics.fill();
+
+            graphics.closePath();
+
+            // Iris
+            graphics.beginPath();
+
+            // Left
+            graphics.translate(-150, 0);
+            graphics.arc(30, 37.5, 15, 0, 2 * Math.PI);
+            // Right
+            graphics.translate(150, 0);
+            graphics.arc(-30, 37.5, 15, 0, 2 * Math.PI);
+
+            graphics.fillStyle = "black";
+            graphics.fill();
+
+            graphics.closePath();
+
+            // Iris
+            graphics.beginPath();
+
+            // Left
+            graphics.translate(-150, 0);
+            graphics.arc(24, 31, 6, 0, 2 * Math.PI);
+            // Right
+            graphics.translate(150, 0);
+            graphics.arc(-36, 31, 6, 0, 2 * Math.PI);
+
+            graphics.fillStyle = "white";
+            graphics.fill();
+
+            graphics.closePath();
+
+        }
+
+        function drawSmile() {
+            graphics.beginPath();
+            graphics.resetTransform();
+            graphics.translate(330, 5);
+            graphics.translate(150, 300);
+            // Lower lip
+            graphics.moveTo(25, -37.5);
+            graphics.bezierCurveTo(60, 12, 90, 12, 125, -37.5);
+            // Upper lip
+            graphics.moveTo(25, -37.5);
+            graphics.bezierCurveTo(60, -15, 90, -15, 125, -37.5);
+            // Left crease
+            graphics.moveTo(26, -46);
+            graphics.bezierCurveTo(27, -37.5, 27, -37.5, 21, -30);
+
+            graphics.strokeStyle = "black";
+            graphics.stroke();
+        }
+
+        function drawFirst() {
+            drawBody();
         }
 
         function init() {
             canvas = document.getElementById("theCanvas");
             graphics = canvas.getContext("2d");
+            graphics.translate(330, 5); // More centered and no edge clipping
             drawBody();
+            drawEyes();
+            drawSmile();
         }
     </script>
 </head>
 
 <body onload="init()">
-    <canvas id="theCanvas" width="450" height="450"></canvas>
+    <canvas id="theCanvas" width="900" height="900"></canvas>
 </body>
 
 </html>
