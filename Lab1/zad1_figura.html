@@ -9,12 +9,6 @@
 
         function drawBody() {
 
-            /*
-            graphics.fillStyle = "#fe0000";
-            graphics.fillRect(150, 0, 150, 450); // Vertical rect
-            graphics.fillRect(0, 150, 450, 150); // Horizontal rect
-            */
-
             graphics.beginPath();
             graphics.moveTo(0, 150);    // Starting from top-left corner of left horizontal rectangle
             graphics.lineTo(150, 150);
@@ -41,91 +35,108 @@
 
         }
 
-        function drawEyes() {
-
-            // White part
+        function drawEye() {
+            // Sclera
             graphics.beginPath();
-
-            // Left
-            graphics.translate(150, 150);
             graphics.arc(30, 37.5, 25, 0, 2 * Math.PI);
-            // Right
-            graphics.translate(150, 0);
-            graphics.arc(-30, 37.5, 25, 0, 2 * Math.PI);
-
             graphics.fillStyle = "white";
             graphics.fill();
-
             graphics.closePath();
-
             // Iris
             graphics.beginPath();
-
-            // Left
-            graphics.translate(-150, 0);
             graphics.arc(30, 37.5, 15, 0, 2 * Math.PI);
-            // Right
-            graphics.translate(150, 0);
-            graphics.arc(-30, 37.5, 15, 0, 2 * Math.PI);
-
             graphics.fillStyle = "black";
             graphics.fill();
-
             graphics.closePath();
-
-            // Iris
+            // Glint
             graphics.beginPath();
-
-            // Left
-            graphics.translate(-150, 0);
             graphics.arc(24, 31, 6, 0, 2 * Math.PI);
-            // Right
-            graphics.translate(150, 0);
-            graphics.arc(-36, 31, 6, 0, 2 * Math.PI);
-
             graphics.fillStyle = "white";
             graphics.fill();
-
-            graphics.closePath();
-
         }
 
         function drawSmile() {
             graphics.beginPath();
-            graphics.resetTransform();
-            graphics.translate(330, 5);
             graphics.translate(150, 300);
             // Lower lip
-            graphics.moveTo(25, -37.5);
-            graphics.bezierCurveTo(60, 12, 90, 12, 125, -37.5);
+            graphics.moveTo(20, -37.5);
+            graphics.bezierCurveTo(68, 12, 90, 12, 130, -37.5);
             // Upper lip
-            graphics.moveTo(25, -37.5);
-            graphics.bezierCurveTo(60, -15, 90, -15, 125, -37.5);
+            graphics.bezierCurveTo(110, -20, 39, -22, 20, -37.5);
+
+            graphics.closePath();
+            graphics.fillStyle = "black";
+            graphics.fill();
+
+            graphics.save();
+
             // Left crease
-            graphics.moveTo(26, -46);
-            graphics.bezierCurveTo(27, -37.5, 27, -37.5, 21, -30);
+            function crease() {
+                graphics.moveTo(21, -46);
+                graphics.bezierCurveTo(22, -37.5, 24, -37.5, 15, -30);
+            }
+            crease();
+            // Right crease
+            graphics.save();
+            graphics.translate(150, 0);
+            graphics.scale(-1, 1);
+            crease();
+            graphics.restore();
 
             graphics.strokeStyle = "black";
             graphics.stroke();
         }
 
-        function drawFirst() {
-            drawBody();
+        function drawTeeth() {
+            graphics.beginPath();
+            graphics.lineTo(-4, 15);
+            graphics.bezierCurveTo(2, 20, 15, 19, 21, 16);
+            graphics.lineTo(21, -0.5);
+            graphics.bezierCurveTo(15, 0, 5, 0, -4, 0);
+            graphics.lineTo(-4, 15);
+
+            graphics.fillStyle = "white";
+            graphics.fill();
+            graphics.closePath();
+
+            graphics.beginPath();
+            graphics.strokeStyle = "black";
+            graphics.lineWidth = 1.5;
+            graphics.moveTo(9.5, 0);
+            graphics.lineTo(9.5, 20);
+            graphics.stroke();
+
         }
 
         function init() {
             canvas = document.getElementById("theCanvas");
             graphics = canvas.getContext("2d");
-            graphics.translate(330, 5); // More centered and no edge clipping
+            graphics.lineWidth = 3;
+            graphics.strokeRect(0, 0, 900, 460);
+
+            graphics.translate(225, 5); // Center on canvas for mirroring and to avoid edge clipping
             drawBody();
-            drawEyes();
+
+            // Left eye
+            graphics.translate(150, 150);
+            drawEye();
+            // Right eye
+            graphics.translate(90, 0);
+            drawEye();
+
+            graphics.resetTransform();
+            graphics.translate(225, 5);
             drawSmile();
+
+            graphics.resetTransform();
+            graphics.translate(445, 280);
+            drawTeeth();
         }
     </script>
 </head>
 
 <body onload="init()">
-    <canvas id="theCanvas" width="900" height="900"></canvas>
+    <canvas id="theCanvas" width="900" height="460"></canvas>
 </body>
 
 </html>
