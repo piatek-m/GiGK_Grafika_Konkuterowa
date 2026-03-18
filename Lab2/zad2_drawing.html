@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lab2Ex2</title>
+    <style>
+        body {
+            background-color: rgb(195, 195, 195);
+            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #clearButton {
+            margin: 8px 0;
+        }
+
+        canvas {
+            background-color: white;
+            display: block;
+        }
+
+        #canvasholder {
+            border: 3px solid black;
+            cursor: crosshair;
+        }
+    </style>
+
+    <script>
+        var canvas;
+        var graphics;
+
+        function randomColorString() {
+            var r = Math.floor(256 * Math.random());
+            var g = Math.floor(256 * Math.random());
+            var b = Math.floor(256 * Math.random());
+            return "rgb(" + r + "," + g + "," + b + ")";
+        }
+
+        function mouseHandler() {
+
+            var dragging = false;
+            var startX, startY;
+            var prevX, prevY;
+
+            var shapeColor;
+
+            var shapeSelect;
+
+            function doMouseDown(event) {
+
+                if (dragging) {
+                    return;
+                }
+                if (event.button != 0) {
+                    return;
+                }
+                var x, y;
+                var r = canvas.getBoundingClientRect();
+                x = Math.round(event.clientX - r.left);
+                y = Math.round(event.clientY - r.top);
+                dragging = true;
+                startX = prevX = x;
+                startY = prevY = y;
+                document.addEventListener("mousemove", doMouseMove, false);
+                document.addEventListener("mouseup", doMouseUp, false);
+                shapeColor = Number(document.getElementById("shapeColor").value);
+                shapeSelect = Number(document.getElementById("shapeSelect").value);
+            }
+
+            function doMouseMove(event) {
+                if (!dragging) {
+                    return;
+                }
+                var x, y;
+                var r = canvas.getBoundingClientRect();
+                x = Math.round(event.clientX - r.left);
+                y = Math.round(event.clientY - r.top);
+
+                const dx = x - prevX;
+                const dy = y - prevY;
+                if (Math.sqrt(dx * dx + dy * dy) < 3) {
+                    return;
+                }
+
+                const colors = ["random", "red", "green", "blue", "turquoise", "hotpink", "bisque"];
+
+                if (colors[shapeColor] === "random") {
+                    graphics.fillStyle = randomColorString();
+                } else {
+                    graphics.fillStyle = colors[shapeColor];
+                }
+
+                switch (shapeSelect) {
+                    // Square
+                    case 0:
+                        graphics.fillRect(x - 20, y - 20, 40, 40);
+                        graphics.strokeRect(x - 20, y - 20, 40, 40);
+                        break;
+
+                    // Triangle
+                    case 1: {
+                        const size = 20;
+
+                        graphics.beginPath();
+                        graphics.moveTo(x, y - size);
+                        graphics.lineTo(x - size, y + size);
+                        graphics.lineTo(x + size, y + size);
+                        graphics.closePath();
+
+                        graphics.fill();
+                        graphics.stroke();
+                        break;
+                    }
+
+                    // Plus sign (+)
+                    case 2: {
+                        const size = 42;
+                        const third = size / 3;
+
+                        graphics.save();
+                        graphics.translate(x, y); // For easier calculations and readability
+                        graphics.beginPath();
+
+                        // Drawing the "+" sign algorithmically: increasing coordinates until they reach the point corresponding to the maximum width/height of the shape, then change drawing direction (start decreasing)
+                        let currX = -size / 6;
+                        let currY = -size / 2;
+                        let movingRight = true;
+                        let movingDown = true;
+                        graphics.moveTo(currX, currY);
+
+                        for (let i = 0; i <= 10; i++) {
+                            let nextX = currX;
+                            let nextY = currY;
+                            if (i % 2 === 0) {
+                                if (currX >= size / 2) movingRight = false;
+                                if (currX <= -size / 2) movingRight = true;
+                                nextX = currX + (movingRight ? third : -third);
+                            } else {
+                                if (currY >= size / 2) movingDown = false;
+                                if (currY <= -size / 2) movingDown = true;
+                                nextY = currY + (movingDown ? third : -third);
+                            }
+                            graphics.lineTo(nextX, nextY);
+                            currX = nextX;
+                            currY = nextY;
+                        }
+
+                        graphics.closePath();
+                        graphics.fill();
+                        graphics.stroke();
+                        graphics.restore();
+                        break;
+                    }
+                }
+
+                prevX = x;
+                prevY = y;
+            }
+
+            function doMouseUp(event) {
+                if (!dragging) {
+                    return;
+                }
+                dragging = false;
+                document.removeEventListener("mousemove", doMouseMove, false);
+                document.removeEventListener("mouseup", doMouseUp, false);
+            }
+
+            canvas.addEventListener("mousedown", doMouseDown, false);
+
+        }
+
+        function doClear() {
+            graphics.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function init() {
+            canvas = document.getElementById("canvas");
+            graphics = canvas.getContext("2d");
+            mouseHandler();
+            graphics.fillStyle = "white";
+            graphics.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Hint ze streszczenia: przechwytywanie w JS, nie HTML
+            document.getElementById("clearButton").onclick = doClear;
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+
+    <h2>Lab 2, Exercise 2</h2>
+
+    <p><b>Color:</b>
+        <select id="shapeColor">
+            <option value="0" selected="selected">Random</option>
+            <option value="1">Red</option>
+            <option value="2">Green</option>
+            <option value="3">Blue</option>
+            <option value="4">Turquoise</option>
+            <option value="5">Hotpink</option>
+            <option value="6">Bisque</option>
+        </select>
+    </p>
+
+    <div>
+        <b>Drawing:</b>
+        <select id="shapeSelect">
+            <option value="0">Square</option>
+            <option value="1">Triangle</option>
+            <option value="2">Plus Sign</option>
+        </select>
+    </div>
+
+    <div>
+        <button id="clearButton">Clear</button>
+    </div>
+
+    <div id="canvasholder">
+        <canvas id="canvas" width="900" height="600">
+            Canvas not supported.
+        </canvas>
+    </div>
+</body>
+
+</html>

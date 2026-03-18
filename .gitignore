@@ -1,2 +1,10 @@
 # PDFy z wykładu
 Wykład*.pdf
+
+# Sprawozdania
+*Sprawozd*.pdf
+*Sprawozd*.odt
+*Sprawozd*.odt*
+
+# Zrzuty ekranu
+zrzut*.png

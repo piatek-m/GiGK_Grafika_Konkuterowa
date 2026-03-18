@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Szachownica</title>
+    <style>
+        body {
+            background-color: bisque;
+            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: scroll;
+        }
+
+        canvas {
+            border: 5px solid maroon;
+            background-color: white;
+        }
+    </style>
+
+    <script>
+        var canvas;
+        var ctx;
+
+        function draw() {
+            const canvasWidth = 800;
+            const squareWidth = canvasWidth / 8;
+
+            canvas.width = canvasWidth;
+            canvas.height = canvasWidth;
+            ctx.fillStyle = "black";
+
+            for (let i = 0; i < 8; ++i) {
+                for (let j = 0; j < 8; ++j) {
+                    ctx.translate(0, squareWidth);
+                    ctx.fillRect(0, 0, squareWidth, squareWidth);
+                    ctx.translate(0, squareWidth);
+                }
+                ctx.translate(squareWidth, -squareWidth * 17);
+            }
+        }
+
+        function init() {
+            canvas = document.getElementById("theCanvas");
+            ctx = canvas.getContext("2d");
+
+            draw();
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <canvas id="theCanvas"></canvas>
+</body>
+
+</html>

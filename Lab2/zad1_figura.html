@@ -112,7 +112,7 @@
             canvas = document.getElementById("theCanvas");
             graphics = canvas.getContext("2d");
             graphics.lineWidth = 3;
-            graphics.strokeRect(0, 0, 900, 460);
+            graphics.strokeRect(0, 0, canvas.width, canvas.height); // Canvas border
 
             graphics.translate(225, 5); // Center on canvas for mirroring and to avoid edge clipping
             drawBody();
@@ -135,8 +135,10 @@
     </script>
 </head>
 
-<body onload="init()">
-    <canvas id="theCanvas" width="900" height="460"></canvas>
+<body onload="init()"
+    style="background-color: rgb(195, 195, 195); display: flex; justify-content: center; align-items: center; min-height: 90vh;">
+    <!-- Center vertically -->
+    <canvas id="theCanvas" width="900" height="460" style="background-color: white;"></canvas>
 </body>
 
 </html>

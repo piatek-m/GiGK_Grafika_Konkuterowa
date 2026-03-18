@@ -1,0 +1,1 @@
+## Numer wariantu = 4
