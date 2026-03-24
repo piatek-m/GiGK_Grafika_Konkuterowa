@@ -8,3 +8,6 @@ Wykład*.pdf
 
 # Zrzuty ekranu
 zrzut*.png
+
+# Python virtual environments
+venv/
