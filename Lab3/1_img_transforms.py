@@ -3,16 +3,16 @@ import numpy as np
 
 pygame.init()
 
-WINDOW_WIDTH = 600
-WINDOW_HEIGTH = 600
-window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGTH))
+WINDOW_WIDTH = 1400
+WINDOW_HEIGHT = 1400
+window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Wóz asenizacyjny Veenhuis")
 YELLOW = (255, 255, 0)
 
 original = pygame.image.load(
     "John_Deere_1640,_Veenhuis_slurry_trailer.jpg"
 ).convert_alpha()
-original = pygame.transform.scale(original, (300, 200))
+original = pygame.transform.scale(original, (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 3))
 
 
 # Apply shear to a surface in X and/or Y axis
@@ -102,10 +102,10 @@ while run:
             rect = transformed.get_rect(topleft=(WINDOW_WIDTH // 8, 0))
         case 8:
             rect = transformed.get_rect(
-                midbottom=(WINDOW_WIDTH // 2.2, WINDOW_HEIGTH - (WINDOW_HEIGTH // 30))
+                midbottom=(WINDOW_WIDTH // 2.2, WINDOW_HEIGHT - (WINDOW_HEIGHT // 30))
             )
         case 9:
-            rect = transformed.get_rect(topright=(WINDOW_WIDTH, WINDOW_HEIGTH // 3))
+            rect = transformed.get_rect(topright=(WINDOW_WIDTH, WINDOW_HEIGHT // 3))
         case _:
             rect = transformed.get_rect(center=window.get_rect().center)
 
