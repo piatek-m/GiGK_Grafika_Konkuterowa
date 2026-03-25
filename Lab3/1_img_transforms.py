@@ -6,7 +6,7 @@ pygame.init()
 WINDOW_WIDTH = 600
 WINDOW_HEIGTH = 600
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGTH))
-pygame.display.set_caption("Transformations")
+pygame.display.set_caption("Wóz asenizacyjny Veenhuis")
 YELLOW = (255, 255, 0)
 
 original = pygame.image.load(
