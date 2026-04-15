@@ -11,3 +11,6 @@ zrzut*.png
 
 # Python virtual environments
 venv/
+
+# CMake builds
+build/
