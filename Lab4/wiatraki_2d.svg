@@ -1,0 +1,49 @@
+<svg width="100%" viewBox="0 0 900 450" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+    <title>
+        Wiatraki 2D SVG
+    </title>
+
+    <symbol id="spin-rect" transform="rotate(0)" overflow="visible" stroke="black">
+
+        <animateTransform attributeName="transform" type="rotate"
+            from="0" to="360"
+            begin="0s" dur="1.25s" repeatCount="indefinite" />
+
+        <!-- Rectangle -->
+        <rect x="-25" y="-25" width="50" height="50" fill="none" stroke-width="1.5" />
+        <!-- Diagonals -->
+        <line x1="-25" x2="25" y1="-25" y2="25" stroke-width="1.15" />
+        <line x1="-25" x2="25" y1="25" y2="-25" stroke-width="1.15" />
+
+    </symbol>
+
+    <symbol id="windmill" viewBox="0 0 900 450">
+        <g transform="translate(450,75)"> <!-- Horizontal center of view box -->
+
+            <g transform="translate(0,150) rotate(20)"> <!-- Arm at the top vertex of triangle -->
+
+                <!-- Spinning rectangle at right-hand side of the arm -->
+                <use href="#spin-rect" transform="translate(95,0)" />
+                <!-- Spinning rectangle at left-hand side -->
+                <use href="#spin-rect" transform="translate(-95,0)" />
+
+                <!-- Rectangular arm -->
+                <rect x="-100" y="-7" width="200" height="14" fill="peru" />
+            </g>
+
+            <!-- Triangular base -->
+            <polygon
+                points="-30,320 
+                        30,320 
+                        0,150"
+                fill="var(--base-color)"
+            />
+        </g>
+    </symbol>
+
+    <use href="#windmill" style="--base-color:navy" x="0" y="0" width="900" height="450" />
+    <use href="#windmill" style="--base-color:mediumvioletred" x="-70" y="-90" width="600"
+        height="300" />
+    <use href="#windmill" style="--base-color:forestgreen" x="400" y="-70" width="450" height="225" />
+
+</svg>
