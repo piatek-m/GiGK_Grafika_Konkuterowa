@@ -14,3 +14,6 @@ venv/
 
 # CMake builds
 build/
+
+# VSCode configs
+.vscode/
