@@ -17,3 +17,10 @@ build/
 
 # VSCode configs
 .vscode/
+
+# Przyklady
+przyklad*
+przykład*
+
+# Resources
+resources*
